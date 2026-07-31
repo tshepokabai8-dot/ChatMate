@@ -1,14 +1,16 @@
 import language_brain
 import calculator
 import memory
+import personality
 
-print("🤖 KABAI AI: Hello! Type 'bye' to end the chat.")
+print("🤖 ChatMate — Powered by KABAI AI")
+print("Type 'bye' to exit.")
 
 while True:
     message = input("You: ")
 
     if message.lower() == "bye":
-        print("🤖 KABAI AI: Goodbye! 👋")
+        print(personality.style("Goodbye! 👋"))
         break
 
     if message.lower().startswith("remember"):
@@ -16,16 +18,18 @@ while True:
 
         if "=" in data:
             key, value = data.split("=", 1)
-            print("🤖 KABAI AI:", memory.remember(key.strip(), value.strip()))
+            response = memory.remember(key.strip(), value.strip())
         else:
-            print("🤖 KABAI AI: Use format: remember name=Tshepo")
+            response = "Use format: remember name=Tshepo"
 
     elif message.lower().startswith("what is"):
         key = message.replace("what is", "").strip()
-        print("🤖 KABAI AI:", memory.recall(key))
+        response = memory.recall(key)
 
     elif any(symbol in message for symbol in ["+", "-", "*", "/"]):
-        print("🤖 KABAI AI:", calculator.calculate(message))
+        response = str(calculator.calculate(message))
 
     else:
-        print("🤖 KABAI AI:", language_brain.respond(message))
+        response = language_brain.respond(message)
+
+    print(personality.style(response))
