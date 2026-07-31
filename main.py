@@ -2,6 +2,7 @@ import language_brain
 import calculator
 import memory
 import personality
+import knowledge
 
 print("🤖 ChatMate — Powered by KABAI AI")
 print("Type 'bye' to exit.")
@@ -30,6 +31,9 @@ while True:
         response = str(calculator.calculate(message))
 
     else:
-        response = language_brain.respond(message)
+        response = knowledge.answer(message)
+
+        if response == "I don't know that yet, but I'm still learning.":
+            response = language_brain.respond(message)
 
     print(personality.style(response))
