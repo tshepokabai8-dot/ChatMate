@@ -1,4 +1,5 @@
 import language_brain
+import calculator
 
 print("🤖 KABAI AI: Hello! Type 'bye' to end the chat.")
 
@@ -9,5 +10,10 @@ while True:
         print("🤖 KABAI AI: Goodbye! 👋")
         break
 
-    response = language_brain.respond(message)
-    print("🤖 KABAI AI:", response)
+    if any(symbol in message for symbol in ["+", "-", "*", "/"]):
+        result = calculator.calculate(message)
+        print("🤖 KABAI AI:", result)
+
+    else:
+        response = language_brain.respond(message)
+        print("🤖 KABAI AI:", response)
