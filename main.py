@@ -4,6 +4,7 @@ import memory
 import personality
 import knowledge
 import settings
+import security
 
 print(f"🤖 {settings.APP_NAME} — Powered by {settings.POWERED_BY}")
 print(f"Version: {settings.VERSION}")
@@ -11,6 +12,10 @@ print("Type 'bye' to exit.")
 
 while True:
     message = input("You: ")
+
+    if not security.check_message(message):
+        print(personality.style("I can't help with that request."))
+        continue
 
     if message.lower() == "bye":
         print(personality.style("Goodbye! 👋"))
