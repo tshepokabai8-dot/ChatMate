@@ -1,0 +1,9 @@
+ChatMate — Powered by KABAI AI
+
+Version: 1.0
+
+Creator: Tshepo Kabai
+
+Description:
+A personal AI assistant with conversation,
+memory, calculator, knowledge, and personality systems.
