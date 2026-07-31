@@ -3,8 +3,10 @@ import calculator
 import memory
 import personality
 import knowledge
+import settings
 
-print("🤖 ChatMate — Powered by KABAI AI")
+print(f"🤖 {settings.APP_NAME} — Powered by {settings.POWERED_BY}")
+print(f"Version: {settings.VERSION}")
 print("Type 'bye' to exit.")
 
 while True:
