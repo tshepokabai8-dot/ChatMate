@@ -6,6 +6,7 @@ import knowledge
 import settings
 import security
 import profile
+import updates
 
 current_user = "default"
 
@@ -24,7 +25,10 @@ while True:
         print(personality.style("Goodbye! 👋"))
         break
 
-    if message.lower().startswith("login"):
+    if message.lower() == "check updates":
+        response = updates.check_update()
+
+    elif message.lower().startswith("login"):
         current_user = message.replace("login", "").strip()
         response = "Welcome back, " + current_user
 
