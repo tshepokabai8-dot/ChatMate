@@ -1,0 +1,12 @@
+[build]
+
+app_name = ChatMate
+version = 1.0
+
+entry_point = app.py
+
+description = ChatMate — Powered by KABAI AI
+
+requirements =
+    python
+    pyttsx3
