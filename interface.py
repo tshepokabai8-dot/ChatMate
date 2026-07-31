@@ -46,13 +46,18 @@ def send_message():
 
 
 window = tk.Tk()
-window.title("ChatMate — Powered by KABAI AI")
-window.geometry("400x500")
+window.title(f"{settings.APP_NAME} — Powered by {settings.POWERED_BY}")
+window.geometry("450x600")
 
-chat_box = tk.Text(window)
+chat_box = tk.Text(window, height=25, width=50)
 chat_box.pack()
 
-user_input = tk.Entry(window)
+chat_box.insert(
+    tk.END,
+    "🤖 Welcome to ChatMate — Powered by KABAI AI\n\n"
+)
+
+user_input = tk.Entry(window, width=40)
 user_input.pack()
 
 send_button = tk.Button(
