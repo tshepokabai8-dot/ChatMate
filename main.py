@@ -7,6 +7,8 @@ import settings
 import security
 import profile
 
+current_user = "default"
+
 print(f"🤖 {settings.APP_NAME} — Powered by {settings.POWERED_BY}")
 print(f"Version: {settings.VERSION}")
 print("Type 'bye' to exit.")
@@ -22,26 +24,26 @@ while True:
         print(personality.style("Goodbye! 👋"))
         break
 
-    if message.lower().startswith("create profile"):
-        name = message.replace("create profile", "").strip()
-        response = profile.create_profile(name)
-
-    elif message.lower().startswith("profile"):
-        name = message.replace("profile", "").strip()
-        response = profile.get_profile(name)
+    if message.lower().startswith("login"):
+        current_user = message.replace("login", "").strip()
+        response = "Welcome back, " + current_user
 
     elif message.lower().startswith("remember"):
         data = message.replace("remember", "").strip()
 
         if "=" in data:
             key, value = data.split("=", 1)
-            response = memory.remember(key.strip(), value.strip())
+            response = memory.remember(
+                current_user,
+                key.strip(),
+                value.strip()
+            )
         else:
-            response = "Use format: remember name=Tshepo"
+            response = "Use format: remember favorite=anime"
 
     elif message.lower().startswith("what is"):
         key = message.replace("what is", "").strip()
-        response = memory.recall(key)
+        response = memory.recall(current_user, key)
 
     elif any(symbol in message for symbol in ["+", "-", "*", "/"]):
         response = calculator.calculate(message)
