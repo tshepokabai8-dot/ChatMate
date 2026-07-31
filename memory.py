@@ -1,9 +1,21 @@
+import json
+
 print("💾 MEMORY BRAIN LOADED")
 
-memory = {}
+FILE = "memory.json"
+
+try:
+    with open(FILE, "r") as f:
+        memory = json.load(f)
+except:
+    memory = {}
 
 def remember(key, value):
     memory[key] = value
+
+    with open(FILE, "w") as f:
+        json.dump(memory, f)
+
     return "I'll remember that."
 
 def recall(key):
