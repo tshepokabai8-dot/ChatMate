@@ -9,67 +9,51 @@ import security
 import settings
 import voice
 
-print("🖥️ CHAT INTERFACE LOADED")
 
+def start():
 
-def send_message():
-    message = user_input.get()
-    user_input.delete(0, tk.END)
+    def send_message():
+        message = user_input.get()
+        user_input.delete(0, tk.END)
 
-    chat_box.insert(tk.END, "You: " + message + "\n")
+        chat_box.insert(tk.END, "You: " + message + "\n")
 
-    if not security.check_message(message):
-        response = "I can't help with that request."
+        if not security.check_message(message):
+            response = "I can't help with that request."
 
-    elif message.lower().startswith("remember"):
-        data = message.replace("remember", "").strip()
+        elif any(symbol in message for symbol in ["+", "-", "*", "/"]):
+            response = calculator.calculate(message)
 
-        if "=" in data:
-            key, value = data.split("=", 1)
-            response = memory.remember(key.strip(), value.strip())
         else:
-            response = "Use format: remember name=Tshepo"
+            response = knowledge.answer(message)
 
-    elif message.lower().startswith("what is"):
-        key = message.replace("what is", "").strip()
-        response = memory.recall(key)
+            if response == "I don't know that yet, but I'm still learning.":
+                response = language_brain.respond(message)
 
-    elif any(symbol in message for symbol in ["+", "-", "*", "/"]):
-        response = calculator.calculate(message)
+        final_response = personality.style(str(response))
 
-    else:
-        response = knowledge.answer(message)
+        chat_box.insert(tk.END, final_response + "\n\n")
 
-        if response == "I don't know that yet, but I'm still learning.":
-            response = language_brain.respond(message)
-
-    final_response = personality.style(str(response))
-
-    chat_box.insert(tk.END, final_response + "\n\n")
-
-    voice.speak(final_response)
+        voice.speak(final_response)
 
 
-window = tk.Tk()
-window.title(f"{settings.APP_NAME} — Powered by {settings.POWERED_BY}")
-window.geometry("450x600")
+    window = tk.Tk()
+    window.title(
+        f"{settings.APP_NAME} — Powered by {settings.POWERED_BY}"
+    )
+    window.geometry("450x600")
 
-chat_box = tk.Text(window, height=25, width=50)
-chat_box.pack()
+    chat_box = tk.Text(window, height=25, width=50)
+    chat_box.pack()
 
-chat_box.insert(
-    tk.END,
-    "🤖 Welcome to ChatMate — Powered by KABAI AI\n\n"
-)
+    user_input = tk.Entry(window, width=40)
+    user_input.pack()
 
-user_input = tk.Entry(window, width=40)
-user_input.pack()
+    send_button = tk.Button(
+        window,
+        text="Send",
+        command=send_message
+    )
+    send_button.pack()
 
-send_button = tk.Button(
-    window,
-    text="Send",
-    command=send_message
-)
-send_button.pack()
-
-window.mainloop()
+    window.mainloop()
