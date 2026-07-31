@@ -7,6 +7,7 @@ import personality
 import knowledge
 import security
 import settings
+import voice
 
 print("🖥️ CHAT INTERFACE LOADED")
 
@@ -42,7 +43,11 @@ def send_message():
         if response == "I don't know that yet, but I'm still learning.":
             response = language_brain.respond(message)
 
-    chat_box.insert(tk.END, personality.style(str(response)) + "\n\n")
+    final_response = personality.style(str(response))
+
+    chat_box.insert(tk.END, final_response + "\n\n")
+
+    voice.speak(final_response)
 
 
 window = tk.Tk()
