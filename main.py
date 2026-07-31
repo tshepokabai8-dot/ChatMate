@@ -5,6 +5,7 @@ import personality
 import knowledge
 import settings
 import security
+import profile
 
 print(f"🤖 {settings.APP_NAME} — Powered by {settings.POWERED_BY}")
 print(f"Version: {settings.VERSION}")
@@ -21,7 +22,15 @@ while True:
         print(personality.style("Goodbye! 👋"))
         break
 
-    if message.lower().startswith("remember"):
+    if message.lower().startswith("create profile"):
+        name = message.replace("create profile", "").strip()
+        response = profile.create_profile(name)
+
+    elif message.lower().startswith("profile"):
+        name = message.replace("profile", "").strip()
+        response = profile.get_profile(name)
+
+    elif message.lower().startswith("remember"):
         data = message.replace("remember", "").strip()
 
         if "=" in data:
@@ -35,7 +44,7 @@ while True:
         response = memory.recall(key)
 
     elif any(symbol in message for symbol in ["+", "-", "*", "/"]):
-        response = str(calculator.calculate(message))
+        response = calculator.calculate(message)
 
     else:
         response = knowledge.answer(message)
@@ -43,4 +52,4 @@ while True:
         if response == "I don't know that yet, but I'm still learning.":
             response = language_brain.respond(message)
 
-    print(personality.style(response))
+    print(personality.style(str(response)))
